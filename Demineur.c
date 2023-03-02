@@ -1,3 +1,4 @@
+// Projet démineur en C sur console par Loan ALIX et Victor MARTINAN
 //Les includes
 #include <stdio.h>
 #include <time.h>
