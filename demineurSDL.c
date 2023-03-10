@@ -9,10 +9,10 @@
 
 #define TEXTURE_COUNT 13
 
-//Définition de notre variable globale
+//DÃ©finition de notre variable globale
 int size = 9;
 
-//Pré définition des diverses fonctions
+//PrÃ© dÃ©finition des diverses fonctions
 int TableSize();
 void PrepareGrid(char** grid);
 void SDLPrintGrid(char** grid, SDL_Texture* imgTabl[TEXTURE_COUNT]);
@@ -29,7 +29,7 @@ typedef int bool;
 #define false 0
 #define true 1
 
-//Pré définir les fonction du SDL 
+//PrÃ© dÃ©finir les fonction du SDL 
 SDL_Renderer* renderer;
 SDL_Window* window;
 bool isRunning;
@@ -98,7 +98,7 @@ int main() {
     Mix_CloseAudio();
 }
 
-//fonction de création de Window 
+//fonction de crÃ©ation de Window 
 void CreateWindow() 
 {
     window = SDL_CreateWindow(&window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 1000, SDL_WINDOW_RESIZABLE);
@@ -107,7 +107,7 @@ void CreateWindow()
 }
 
 
-//Evènement des clic 
+//EvÃ¨nement des clic 
 void handleEvents(int *X, int *Y, char *playerAction ,int *playCount) {
     SDL_Event ev;
     while (SDL_PollEvent(&ev) != 0)
@@ -153,7 +153,7 @@ void init_game_loop(char** gameGrid, char** realGrid)
 	
 }
 
-//fonction pour créer la boucle de jeu 
+//fonction pour crÃ©er la boucle de jeu 
 void gameLoop(char** gameGrid, char** realGrid, SDL_Texture* imgTabl[TEXTURE_COUNT]) {
 	
 
@@ -213,7 +213,7 @@ void gameLoop(char** gameGrid, char** realGrid, SDL_Texture* imgTabl[TEXTURE_COU
 		fps = 1000 / delta_time;
         SDL_RenderClear(renderer);
 	}
-	//Gagné
+	//GagnÃ©
 	SDLPrintGrid(realGrid, imgTabl);
     
     SDL_Rect ending = { 230, 230, 540, 540 };
@@ -229,23 +229,25 @@ void gameLoop(char** gameGrid, char** realGrid, SDL_Texture* imgTabl[TEXTURE_COU
         Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
         Mix_Music* loseSoundEffect = Mix_LoadMUS("music/deathsoundeffect.mp3");
         Mix_PlayMusic(loseSoundEffect, NULL);
+       
 
         SDL_RenderCopy(renderer, imgTabl[12], NULL, &ending);
-		printf("\033[0;37mSadly, you landed on a mine, might have more luck next time !");
+        printf("\033[0;37mSadly, you landed on a mine, might have more luck next time !");
+        SDL_Delay(3000);
+        Mix_FreeMusic(loseSoundEffect);
+        Mix_CloseAudio();
 	}
     SDL_RenderPresent(renderer);
     SDL_Delay(10000);
     return 0;
 
-    Mix_FreeMusic(loseSoundEffect);
-    Mix_CloseAudio();
     SDL_RenderClear(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
 
 
-//génération de La taille du tableau 
+//gÃ©nÃ©ration de La taille du tableau 
 int TableSize()
 {
     int Taille;
@@ -329,7 +331,7 @@ void SDLPrintGrid(char** grid, SDL_Texture* imgTabl[TEXTURE_COUNT])
     SDL_RenderPresent(renderer);
 }
 
-//Fonction pour attribuer une valeur par défaut à chaque élément de la grille
+//Fonction pour attribuer une valeur par dÃ©faut Ã  chaque Ã©lÃ©ment de la grille
 void PrepareGrid(char** grid)
 {
     for (int i = 0; i < size; i++)
@@ -341,7 +343,7 @@ void PrepareGrid(char** grid)
     }
 }
 
-//Fonction pour placer les mines de manière aléatoire en fonction de la taille du tableau 
+//Fonction pour placer les mines de maniÃ¨re alÃ©atoire en fonction de la taille du tableau 
 void PlaceMine(char** grid,int playerX , int playerY)
 {
     int MineNumber = size * size / 10;
@@ -398,7 +400,7 @@ void PlaceMine(char** grid,int playerX , int playerY)
     }
 }
 
-//Verifie si il y'a des mines autour de la case donnée
+//Verifie si il y'a des mines autour de la case donnÃ©e
 void checkMine(char** grid, int x, int y)
 {
     int countBombs = 0;
@@ -417,7 +419,7 @@ void checkMine(char** grid, int x, int y)
     grid[x][y] = nbBombs;
 }
 
-//Fonction récursive pour libérer les cases bonnes aux alentours
+//Fonction rÃ©cursive pour libÃ©rer les cases bonnes aux alentours
 void makePlay(char** grid, char** bombGrid, int positionX, int positionY)
 {
     if (positionX < 0 || positionX >= size || positionY < 0 || positionY >= size)
@@ -451,7 +453,7 @@ void makePlay(char** grid, char** bombGrid, int positionX, int positionY)
     makePlay(grid, bombGrid, positionX + 1, positionY + 1);
 }
 
-//Fonction pour mettre un drapeau sur la case donnée
+//Fonction pour mettre un drapeau sur la case donnÃ©e
 void putFlag(char** grid, char** bombGrid, int positionX, int positionY)
 {
     if (grid[positionX][positionY] != '.' && grid[positionX][positionY] != 'F')
@@ -470,7 +472,7 @@ void putFlag(char** grid, char** bombGrid, int positionX, int positionY)
 
 
 
-//Fonction pour vérifier si la case donnée est une mine
+//Fonction pour vÃ©rifier si la case donnÃ©e est une mine
 short isMine(char** grid, int positionX, int positionY, short gameState)
 {
     if (grid[positionX][positionY] == 'B')
@@ -484,7 +486,7 @@ short isMine(char** grid, int positionX, int positionY, short gameState)
     }
 }
 
-//Fonction pour vérifier si l'utilisateur a gagné ou perdu 
+//Fonction pour vÃ©rifier si l'utilisateur a gagnÃ© ou perdu 
 short win(short gameState, char** grid)
 {
     if (gameState != 2)
